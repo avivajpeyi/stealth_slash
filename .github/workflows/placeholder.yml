@@ -1,0 +1,17 @@
+# Example GitHub Actions workflow (disabled)
+# Remove/comment out "workflow_dispatch" to enable manually
+
+name: Placeholder Workflow
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Print hello
+        run: echo "Set up real CI when ready!"
