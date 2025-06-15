@@ -30,7 +30,7 @@ func _ready() -> void:
 	# grapple_ray.set_collision_mask(1 << (physics_grapple_layer_id - 1)) # This would clear all others
 
 func _physics_process(delta: float) -> void:
-	grapple_line.points[0] = global_position # Update line start position every frame
+	grapple_line.points[0] = to_local(global_position) # Update line start position every frame
 
 	if is_grappling:
 		grapple_move(delta)
@@ -73,40 +73,42 @@ func try_grapple() -> void:
 		var hit_point = grapple_ray.get_collision_point()
 
 		print("Grapple hit: ", collider.name)
-		
-		# Check if the collider is a TileMap node
-		if collider is TileMap:
-			var tilemap_node: TileMap = collider
+
+		if collider is TileMapLayer:
+			var tilemap_node: TileMapLayer = collider
 			
-			# Get the cell coordinates at the collision point
+			# Convert global hit_point to TileMap's local coordinates, then to map coordinates
 			var tile_coords = tilemap_node.local_to_map(tilemap_node.to_local(hit_point))
 			
 			# Get the TileData for that specific cell and TileMap layer
-			var tile_data = tilemap_node.get_cell_tile_data(tilemap_grapple_layer_index, tile_coords)
+			var tile_data = tilemap_node.get_cell_tile_data(tile_coords)
+			var tile_id = tilemap_node.get_cell_source_id(tile_coords)
+			
 			
 			if tile_data:
-				print("TILE DATA PRESENT for TileMap cell at ", tile_coords)
-				# Check for the custom data property "grapple_point"
+				print("TILE DATA PRESENT for TileMap cell at ", tile_coords, " with ID ", tile_id)
 				if tile_data.has_custom_data("grapple_point") and tile_data.get_custom_data("grapple_point") == true:
 					print("Tile is grappleable via custom data!")
 					start_grapple(hit_point)
+
 				else:
 					print("Tile has data but no 'grapple_point' custom data or it's false.")
 			else:
-				print("No TileData found for cell at ", tile_coords, " on TileMap layer ", tilemap_grapple_layer_index)
+				print("No TileData found for cell at ", tile_coords, " on TileMap layer ")
 		elif collider.get_collision_layer_value(physics_grapple_layer_id):
-			# This handles any other Rigidbody/StaticBody that might be on the grapple layer
 			print("Collider is a non-TileMap object on the grapple physics layer.")
 			start_grapple(hit_point)
 		else:
 			print("Collider is not a TileMap and not on the grapple physics layer.")
+			
+			
 
 func start_grapple(target: Vector2) -> void:
 	is_grappling = true
 	grapple_target = target
 	grapple_line.visible = true
 	# Set both points for the initial drawing
-	grapple_line.points = [global_position, grapple_target]
+	grapple_line.points = [ to_local(global_position), to_local( grapple_target)]
 	# Reset velocity to ensure snappiness
 	velocity = Vector2.ZERO
 
@@ -135,7 +137,7 @@ func grapple_move(delta: float) -> void:
 			end_grapple()
 
 	# Always update the line's end point to the fixed grapple target
-	grapple_line.points[1] = grapple_target
+	grapple_line.points[1] = to_local(grapple_target)
 
 func end_grapple() -> void:
 	is_grappling = false

@@ -1,22 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://cacadb3mp1p46"]
+[gd_scene load_steps=4 format=3 uid="uid://cacadb3mp1p46"]
 
 [ext_resource type="Script" uid="uid://75vrun8e1dqq" path="res://scenes/player/player.gd" id="1_8afob"]
 [ext_resource type="SpriteFrames" uid="uid://dns7brsdfvf5b" path="res://scenes/player/sprites/player_sprite_frames.tres" id="2_dovo2"]
-[ext_resource type="Script" uid="uid://bd046eokvcnu2" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="3_gmlin"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x7p2l"]
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 2
+platform_floor_layers = 4278190082
+platform_wall_layers = 2
 script = ExtResource("1_8afob")
-move_speed = null
-jump_force = null
-gravity = null
-grapple_speed = null
-attack_force = null
-grapple_max_distance = null
-grapple_stick_distance = null
-tilemap_grapple_layer_index = null
-physics_grapple_layer_id = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(-11, -17)
@@ -28,17 +21,14 @@ centered = false
 shape = SubResource("RectangleShape2D_x7p2l")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("RectangleShape2D_x7p2l")
 
 [node name="GrappleRay" type="RayCast2D" parent="."]
+collision_mask = 10
 
 [node name="GrappleLine" type="Line2D" parent="."]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="PhantomCameraHost" type="Node" parent="Camera2D"]
-process_priority = 300
-process_physics_priority = 300
-script = ExtResource("3_gmlin")
+points = PackedVector2Array(0, 0, 0, 0)
+width = 3.0
