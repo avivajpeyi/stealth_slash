@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddk8skqtgqcir"]
+
+[ext_resource type="Script" uid="uid://bc1ureyhnne0e" path="res://PlayerController/Demo/Resources/DebugMenuUIElements/DebugMenuEditor.gd" id="1_vlg3x"]
+[ext_resource type="Texture2D" uid="uid://cnf2jbpr5obn3" path="res://PlayerController/Demo/Resources/DebugMenuUIElements/ChevronDown.svg" id="2_1lg6j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qptx4"]
+bg_color = Color(0.316823, 0.631115, 0.35243, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jdtks"]
+bg_color = Color(0.782359, 0.977776, 0.792326, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_loyu8"]
+bg_color = Color(0.556863, 0.937255, 0.592157, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="DebugMenuEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vlg3x")
+
+[node name="OutsideButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+flat = true
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_right = 22.0
+offset_bottom = 31.0
+theme_override_constants/separation = 0
+
+[node name="MainPanel" type="PanelContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_qptx4")
+metadata/_edit_group_ = true
+
+[node name="MainPanelContainer" type="MarginContainer" parent="VBoxContainer/MainPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ShowButton" type="Button" parent="VBoxContainer/ButtonsContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 2
+theme_override_constants/icon_max_width = 30
+theme_override_styles/hover = SubResource("StyleBoxFlat_jdtks")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_qptx4")
+theme_override_styles/normal = SubResource("StyleBoxFlat_loyu8")
+toggle_mode = true
+icon = ExtResource("2_1lg6j")
+icon_alignment = 1
+expand_icon = true
+
+[node name="ButtonsContainer" type="GridContainer" parent="VBoxContainer/ButtonsContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+
+[connection signal="pressed" from="OutsideButton" to="." method="_on_outside"]
+[connection signal="toggled" from="VBoxContainer/ButtonsContainer/ShowButton" to="." method="_on_show"]

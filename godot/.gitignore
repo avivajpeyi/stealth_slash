@@ -1,0 +1,37 @@
+.DS_Store
+.idea
+
+# Godot-specific ignores
+.godot/
+.mono/
+*.csproj
+*.sln
+*.user
+*.userprefs
+*/.vs/
+
+# Exported builds
+/export/
+/build/
+
+# Godot editor specific (e.g., Godot 3 settings)
+*.import
+
+# macOS specific ignores
+.DS_Store
+
+# Linux specific ignores
+ehthumbs.db
+Thumbs.db
+
+# Windows specific ignores
+Desktop.ini
+
+# IDE specific ignores (if you use other IDEs alongside Godot)
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+
+

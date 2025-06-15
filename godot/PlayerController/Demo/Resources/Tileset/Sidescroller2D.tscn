@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://csq34u11eo2ss"]
+
+[ext_resource type="TileSet" uid="uid://c024yscq3rtn8" path="res://PlayerController/Demo/Resources/Tileset/Sidescroller2D.tres" id="1_gwiuo"]
+
+[node name="TilemapLayer" type="TileMapLayer"]
+tile_set = ExtResource("1_gwiuo")
